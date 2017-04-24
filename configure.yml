@@ -1,0 +1,56 @@
+---
+- hosts: all
+  gather_facts: False
+  tasks:
+    - name: Creates apps directory locally
+      local_action: file path=./apps state=directory
+
+    - name: Creates roles directory locally
+      local_action: file path=./roles state=directory
+
+    - name: check all roles
+      local_action: command ansible-galaxy install -r requirements.yml --ignore-errors
+    
+    - name: check if Vagrant initialized
+      local_action: stat path="./Vagrantfile"
+      register: Vagrant_Initialized   
+    
+    - name: initialize vagrant
+      local_action: command vagrant init ubuntu/xenial64
+      when: Vagrant_Initialized.stat.exists == False
+
+    - name: add port forwarding for SSH & GlassFish to Vagrant config
+      local_action: 
+          module: lineinfile
+          path: ./Vagrantfile
+          regexp: '^config.vm.box = "ubuntu/xenial64"'
+          insertafter: '^  config\.vm\.box = \"ubuntu\/xenial64\"$'
+          line: "  config.vm.network \"forwarded_port\", guest: 8080, host: 8080\n  config.vm.network \"forwarded_port\", guest: 4848, host: 4848\n"
+      when: Vagrant_Initialized.stat.exists == False
+    
+    - name: run virtual machine
+      local_action: command vagrant up
+    
+    - name: install python 2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      become: yes
+    
+    - name: Install unzip
+      become: true
+      apt:
+        name: unzip
+        state: present
+
+    - name: Install App::Virtualenv locally
+      become: true
+      local_action: shell cpan install App::Virtualenv
+
+    - name: Configure Perl Virtualenv
+      local_action: shell perl -MApp::Virtualenv -erun -- perl-venv
+
+    - name: Install DBIx::Class locally
+      local_action: shell source perl-venv/bin/activate && cpan install DBIx::Class
+
+    - name: Check/Install list of Perl Modules locally
+      local_action: shell source perl-venv/bin/activate && cpan install TAP::Harness::Env DBD::SQLite File::ShareDir SQL::Translator Config::Simple JSON LWP::UserAgent DBIx::Class::TimeStamp
+

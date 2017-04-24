@@ -1,0 +1,6 @@
+---
+- src: williamyeh.oracle-java
+#- src: dpalomar.glassfish
+- src: https://github.com/dnikolayev/ansible-role-glassfish
+  version: master
+  name: dpalomar.glassfish

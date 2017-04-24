@@ -1,0 +1,9 @@
+---
+- hosts: test-servers
+  become: yes
+  vars:
+    - glassfish_user: "ubuntu"
+    - java_version: 8
+  roles:
+    - {role: williamyeh.oracle-java}
+    - {role: dpalomar.glassfish} 
