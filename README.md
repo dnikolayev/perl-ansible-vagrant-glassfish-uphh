@@ -18,7 +18,7 @@ I was trying to do fewer changes to host OS, so everything goes into the same di
 
 To start, please go to some directory, clone project from ..... and then do this:
 
-virtualenv venv
+*virtualenv venv*
 
 and
 
@@ -26,11 +26,11 @@ source ./venv/bin/activate
 
 After this, please do(Ansible will be installed in your virtualenv in local dir):
 
-pip install ansible
+*pip install ansible*
 
 After this, please do next command. I am asking for SUDO pass here to install App::Virtualenv Perl module into the Host system to allow storing of all next modules installs locally. This is equal to Python's virtualenv:
 
-ansible-playbook configure.yml --ask-become-pass
+*ansible-playbook configure.yml --ask-become-pass*
 
 It will take some time, create all needed dirs locally + download & run VM on Vagrant. Also, it will forward 2222(SSH), 8080 and 4848(GlassFish) ports to the Host system, so please keep this ports free.
 
@@ -44,29 +44,29 @@ Next action. You have everything ready to go. For Deployment/Undeployment to Gla
 
 I was not automating this, can be done easily if needed, but please do first init of the app by hands, so:
 
-source ./perl-venv/bin/activate
+*source ./perl-venv/bin/activate*
 
-perl gf_tool.pl --action init --config test.ini
+*perl gf_tool.pl --action init --config test.ini*
 
 If I missed some module, like DBIx::Class::TimeStamp, don't hesitate to run:
 
-cpan DBIx::Class::TimeStamp
+*cpan DBIx::Class::TimeStamp*
 
 It will be installed locally(my OS doesn't have many Perl modules, so installing this one took time :)).
 
 and re-run initialization if there is a problem with module;)
 Should be something like this:
 
-(perl-venv) (venv) Nikolayevs-MacBook-Pro:ansible nick$ perl gf_tool.pl --action init --config test.ini
+`(perl-venv) (venv) Nikolayevs-MacBook-Pro:ansible nick$ perl gf_tool.pl --action init --config test.ini
 Creating DB file
 Saving Default Settings
-Initialization Finished
+Initialization Finished`
 
 
 If everything is fine, you can do:
 
-(perl-venv) (venv) Nikolayevs-MacBook-Pro:ansible nick$ perl gf_tool.pl --action deploy --filepath ./hello.war
-hello successfully deployed and checked!
+`(perl-venv) (venv) Nikolayevs-MacBook-Pro:ansible nick$ perl gf_tool.pl --action deploy --filepath ./hello.war
+hello successfully deployed and checked!`
 
 and then this web-service will be available at http://127.0.0.1:8080/hello/
 
