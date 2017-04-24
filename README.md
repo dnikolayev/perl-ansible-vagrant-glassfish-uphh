@@ -11,7 +11,7 @@ So, we are getting everything up using Ansible.
 Then all actions are being applied to GlassFish/Payara on that virtual machine.
 
 To start, you should have virtualenv installed in your system. (http://pythoncentral.io/how-to-install-virtualenv-python/)
-Also, I was not adding automated cooking of Vagrant locally, so please install it too.
+Also, I was not adding automated cooking of Vagrant locally, so please install it too (https://www.vagrantup.com/docs/installation/). 
 
 All tests were made on Mac OSX Sierra. Should be the same on any Linux too. 
 I was trying to do fewer changes to host OS, so everything goes into the same directory including all Perl packages and ansible roles.
