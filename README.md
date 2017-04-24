@@ -22,7 +22,7 @@ To start, please go to some directory, clone project from ..... and then do this
 
 and
 
-source ./venv/bin/activate
+*source ./venv/bin/activate*
 
 After this, please do(Ansible will be installed in your virtualenv in local dir):
 
@@ -36,7 +36,7 @@ It will take some time, create all needed dirs locally + download & run VM on Va
 
 Next, installing Java & Glassfish into the guest OS:
 
-ansible-playbook tasks/install_glassfish.yml
+*ansible-playbook tasks/install_glassfish.yml*
 
 When it finishes, you're good, and you can check http://127.0.0.1:8080/
 
