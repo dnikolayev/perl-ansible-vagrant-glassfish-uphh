@@ -8,16 +8,6 @@ use GfDeploy::Conf;
 use GfDeploy::Action;
 
 
-#TAP::Harness::Env
-#DBD::SQLite
-#File::ShareDir
-#SQL::Translator
-#Config::Simple
-#JSON
-#LWP::UserAgent
-#File::Spec
-
-
 my %action_list = (
     #work with settings
     'init'           => {'desc' => 'Initialize Database: --init [--config test.ini]', 
